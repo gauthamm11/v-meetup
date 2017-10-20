@@ -1,0 +1,407 @@
+ <?php
+@ session_start(); 
+//internal guide
+if(!isset($_SESSION['uname']))
+{
+	//echo '<script>window.location.href="account/login.php?status=login-required"</script>';
+	//die();
+	header("Location: ../account/login.php");
+		
+}
+
+
+if($_SESSION['type']=='intstu')
+{
+	header("Location: ../int_student/index.php");
+}
+if ($_SESSION['type']=='inhousestu')
+{
+	header("Location: ../in_student/index.php");
+}
+if ($_SESSION['type']=='extguide')
+{
+	header("Location: ../ext_guide/index.php");
+}
+if ($_SESSION['type']=='proco')
+{
+	header("Location: ../coordinator/index.php");
+}
+
+
+error_reporting(0);
+//connect to the database
+mysql_connect ("localhost","root","gautham") or die ('Cannot connect to MySQL: ' . mysql_error());
+mysql_select_db ("v_meetup") or die ('Cannot connect to the database: ' . mysql_error());
+?>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>v-meet up: Project Submission Portal</title>
+<link rel="icon" href="../images/favicon.png" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+<nav class="navbar container well">
+  <div class="container-fluid">
+   
+   
+    <div class="navbar-header">
+     <img src="../images/vit logo (2).png" width="200" height="100">
+    </div>
+   
+   
+    <div>
+      
+      <ul class="nav navbar-nav navbar-right">
+
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+  Welcome
+  <?php 
+  $uiname = mysql_query("SELECT g_name FROM internal_guide WHERE g_id='".$_SESSION['uname']."'") or die ('Query is invalid: ' . mysql_error());
+  while ($row = mysql_fetch_array($uiname)) {
+  	echo $row['g_name'];
+  }
+  
+  ?>
+  
+  
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="../account/logout.php">Logout</a></li>
+    <li><a href="ing_page1.php">second</a></li>
+    <li><a href="index.php">Home</a></li>
+  </ul>
+</div>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div class="container well">
+    <ul class="nav nav-tabs nav-pills nav-justified">
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    <li><a data-toggle="tab" href="#menu1">Profile</a></li>
+    <li><a data-toggle="tab" href="#menu2">Status Approval</a></li>
+    </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+   
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      
+      </div>
+
+       
+       <div id="menu2" class="tab-pane fade">
+      
+      </div>
+      </div>
+      </div>
+      
+-->   
+
+
+
+<div class="container well">
+    <ul class="nav nav-tabs nav-pills nav-justified">
+    <li><a data-toggle="tab" href="#menu1">Fall</a></li>
+    <li><a data-toggle="tab" href="#menu2">Winter</a></li>
+    </ul>
+
+  <div class="tab-content">
+     <div id="menu1" class="tab-pane fade">
+      
+      
+      <!-- months -->
+      
+      <div class="container-fluid well">
+    <ul class="nav nav-tabs nav-pills nav-justified">
+    <li><a data-toggle="tab" href="#jan">January</a></li>
+    <li><a data-toggle="tab" href="#feb">February</a></li>
+    <li><a data-toggle="tab" href="#mar">March</a></li>
+    <li><a data-toggle="tab" href="#apr">April</a></li>
+    <li><a data-toggle="tab" href="#may">May</a></li>
+    <li><a data-toggle="tab" href="#june">June</a></li>
+    </ul>
+
+  <div class="tab-content">
+     <div id="jan" class="tab-pane fade">
+
+<div class="container-fluid">
+  
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+         <!--  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Collapsible Group 1</a> -->
+          <button type="button"  data-toggle="collapse" data-parent="#accordion" class="btn btn-info container-fluid" data-toggle="collapse" data-target="#collapse1"><h1>Simple collapsible</h1></button>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body">
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <?php  
+        
+        
+        $q2 = mysql_query("select * from inhouse_student where g_id='".$_SESSION['uname']."'")or die ('Query is invalid: ' . mysql_error());
+        
+         
+       
+        
+       
+        
+ echo '      <form action="#" method="post" id="att">';
+        
+ echo  '<select name="choiceitem" class="btn btn-default btn-primary dropdown-toggle" required>';
+   
+ while ($row = mysql_fetch_array($q2)) {
+		
+	echo "	<option name='".$row['in_id']."' value='".$row['in_id']."'> ".$row['in_name']." </option>";
+	}
+  echo " </select> ";
+
+ ?> 
+ <?php 
+
+        
+       // echo   '<form action="#" method="post" id="frm">';
+        echo '
+     		<label for="pwd">Status:</label>
+     		<textarea class="form-control" rows="5" id="comment" name="msg"></textarea> <br>';
+        
+        echo '	<button type="submit" class="btn btn-success" name="msgpost">Approve</button>';
+        
+        echo '	<br><br><br></form>';
+        
+        $option = $_POST['choiceitem'];
+        
+        if(isset($_POST['msgpost'])){
+        
+        $msginsert = "insert into `inhouse_review` (`in_id`,`g_id`,`message`) values('$option','".$_SESSION['uname']."','".$_POST['msg']."')" ;
+        
+        
+        mysql_query($msginsert) or die ('Query is invalid: ' . mysql_error());
+        
+        }
+        
+        
+        
+        	?>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+           <button type="button"  data-toggle="collapse" data-parent="#accordion" class="btn btn-info container-fluid" data-toggle="collapse" data-target="#collapse2"><h1>Simple collapsible</h1></button>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
+        
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+           <button type="button"  data-toggle="collapse" data-parent="#accordion" class="btn btn-info container-fluid" data-toggle="collapse" data-target="#collapse3"><h1>Simple collapsible</h1></button>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">
+       </div>
+      </div>
+    </div>
+  </div> 
+</div>
+     
+      </div>
+
+       
+       <div id="feb" class="tab-pane fade">
+
+       
+<div class="container-fluid">
+  
+  <div class="panel-group" id="accordionf">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+         <!--  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Collapsible Group 1</a> -->
+          <button type="button"  data-toggle="collapse" data-parent="#accordionf" class="btn btn-info container-fluid" data-toggle="collapse" data-target="#collapse1f"><h1>Simple collapsiblef</h1></button>
+        </h4>
+      </div>
+      <div id="collapse1f" class="panel-collapse collapse">
+        <div class="panel-body">
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+           <button type="button"  data-toggle="collapse" data-parent="#accordionf" class="btn btn-info container-fluid" data-toggle="collapse" data-target="#collapse2f"><h1>Simple collapsiblef</h1></button>
+        </h4>
+      </div>
+      <div id="collapse2f" class="panel-collapse collapse">
+        <div class="panel-body">
+       </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+           <button type="button"  data-toggle="collapse" data-parent="#accordionf" class="btn btn-info container-fluid" data-toggle="collapse" data-target="#collapse3f"><h1>Simple collapsiblef</h1></button>
+        </h4>
+      </div>
+      <div id="collapse3f" class="panel-collapse collapse">
+        <div class="panel-body">
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+       
+      
+      </div>
+      
+           <div id="mar" class="tab-pane fade">
+      
+      </div>
+
+       
+       <div id="apr" class="tab-pane fade">
+      
+      </div>
+           <div id="may" class="tab-pane fade">
+      
+      </div>
+
+       
+       <div id="june" class="tab-pane fade">
+      
+      </div>
+      
+      
+      
+      </div>
+      
+      </div>
+      
+      
+      <!-- end months -->
+      
+      </div>
+
+       
+       <div id="menu2" class="tab-pane fade">
+       
+       <!-- months -->
+      
+      <div class="container-fluid well">
+    <ul class="nav nav-tabs nav-pills nav-justified">
+    <li><a data-toggle="tab" href="#jul">July</a></li>
+    <li><a data-toggle="tab" href="#aug">August</a></li>
+    <li><a data-toggle="tab" href="#sep">September</a></li>
+    <li><a data-toggle="tab" href="#oct">October</a></li>
+    <li><a data-toggle="tab" href="#nov">November</a></li>
+    <li><a data-toggle="tab" href="#dec">December</a></li>
+    </ul>
+
+  <div class="tab-content">
+     <div id="jul" class="tab-pane fade">
+      
+      </div>
+
+       
+       <div id="aug" class="tab-pane fade">
+      
+      </div>
+           <div id="sep" class="tab-pane fade">
+      
+      </div>
+
+       
+       <div id="oct" class="tab-pane fade">
+      
+      </div>
+           <div id="nov" class="tab-pane fade">
+      
+      </div>
+
+       
+       <div id="dec" class="tab-pane fade">
+      
+      </div>
+      
+      
+      
+      </div>
+      
+      </div>
+       
+      
+      </div>
+      
+      </div>
+      </div>
+
+     
+     
+
+
+
+
+
+
+
+</body>
+</html>

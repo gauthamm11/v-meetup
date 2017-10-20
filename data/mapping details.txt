@@ -1,0 +1,52 @@
+database mapping:-
+
+
+table in-house student:
+
+reg no(primary key)
+name
+pro title
+domain
+mail(unique)
+password(not null)
+
+internal guide id(foreign key)
+
+-----------------------------------
+table intership student:
+
+reg no(primary key)
+name
+pro title
+domain
+mail(unique)
+password(not null)
+
+internal guide id(foreign key)
+external guide id(foreign key)
+
+-----------------------------------
+table internal guide:
+
+id(primary key)
+name
+mail(unique)
+password(not null)
+
+-----------------------------------
+table external guide:
+
+name
+mobile(unique)
+mail(primary key)
+company details
+password(not null)
+
+all length 40
+
+
+wipro narendra ghate
+
+
+faculty database with email,id,name
+student mail
